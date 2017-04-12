@@ -135,6 +135,9 @@ type
 
     procedure CheckCardState;
 
+    function Send(DataIn: array of TBytes; out DataOut; DataOutLen: Integer):
+        Cardinal;
+
     property ReaderName: string read FReaderName;
     property CardState: TCardState read FCardState;
     property ATR: TBytes read FATR;
@@ -703,6 +706,28 @@ begin
   FIFDMajor := ((x shr 4) and $F) * 10 + x and $F;
   x := (FVendorIFDVersion shr 16) and $FF;
   FIFDMinor := ((x shr 4) and $F) * 10 + x and $F;
+end;
+
+function TPCSCReader.Send(DataIn: array of TBytes; out DataOut; DataOutLen:
+    Integer): Cardinal;
+var bIn, b, bOut: TBytes;
+    SW12: Word;
+begin
+  Result := SCARD_S_SUCCESS;
+  for bIn in DataIn do begin
+    b := [];
+    if Protocol = prRaw then
+      Result := IOCTL(IOCTL_CCID_ESCAPE, bIn, b)
+    else
+      Result := TransmitSW(bIn, b, SW12);
+
+    if Result <> SCARD_S_SUCCESS then Break;
+
+    bOut := bOut + b;
+  end;
+  FillChar(DataOut, DataOutLen, 0);
+  if (Result = SCARD_S_SUCCESS) and (Length(bOut) > 0) then
+    Move(bOut[0], DataOut, DataOutLen);
 end;
 
 constructor TPCSC.Create;
