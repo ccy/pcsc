@@ -550,6 +550,7 @@ begin
 
     if FCardState <> NewCardState then begin
       if (FCardState = csNoCard) and (NewCardState = csAvailable) then Exit;
+      if (FCardState = csAvailable) and (NewCardState = csShared) then Exit;
 
       FCardState := NewCardState;
       if (NewCardState <> csShared) and (NewCardState <> csExclusive) then begin
