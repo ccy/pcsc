@@ -58,7 +58,7 @@ type
     FPCSCDeviceContext: THandle;
 {$IFDEF WINDOWS}
     FReaderState: TSCardReaderStateA;
-{$ELSE}
+{.$ELSE}
     FLastReaderSize: Cardinal;
     FOnTerminated: TOnTerminated;
 {$ENDIF}
@@ -70,9 +70,9 @@ type
 
     property OnReaderListChanged: TOnReaderListChanged read FOnReaderListChanged write FOnReaderListChanged;
     property OnTimer: TOnTimer read FOnTimer write FOnTimer;
-{$IFDEF UNIX}
+{.$IFDEF UNIX}
     property OnTerminated: TOnTerminated read FOnTerminated write FOnTerminated;
-{$ENDIF}
+{.$ENDIF}
   end;
 
   TPCSCReader = class
@@ -238,9 +238,9 @@ end;
 procedure TReaderListThread.Execute;
 var
   PCSCResult: Cardinal;
-{$IFDEF UNIX}
+{.$IFDEF UNIX}
   SizeReaders: Cardinal;
-{$ENDIF}
+{.$ENDIF}
 begin
 {$IFDEF WINDOWS}
   FReaderState.cbAtr := 0;
@@ -258,7 +258,7 @@ begin
       FReaderState.dwCurrentState := FReaderState.dwEventState;
       if Assigned(FOnReaderListChanged) then Synchronize(FOnReaderListChanged);
     end;
-{$ELSE}
+{.$ELSE}
     PCSCResult := FPCSCRaw.SCardListReaders(FPCSCDeviceContext, nil, nil, SizeReaders);
     if PCSCResult = SCARD_E_CANCELLED then break;
     if (PCSCResult = SCARD_S_SUCCESS) or (PCSCResult = SCARD_E_NO_READERS_AVAILABLE) then begin
@@ -279,9 +279,9 @@ begin
     end;
   end;
   if FPCSCDeviceContext <> 0 then FPCSCRaw.SCardReleaseContext(FPCSCDeviceContext);
-{$IFDEF UNIX}
+{.$IFDEF UNIX}
   if Assigned(FOnTerminated) then Synchronize(FOnTerminated);
-{$ENDIF}
+{.$ENDIF}
 end;
 
 constructor TPCSCReader.Create(AReaderName: string; PCSCRaw: TPCSCRaw);
