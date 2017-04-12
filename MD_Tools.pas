@@ -25,7 +25,7 @@
 
 unit MD_Tools;
 {$IFDEF FPC}
-{$MODE delphi}                                    
+{$MODE delphi}
 {$ELSE}
 {$DEFINE WINDOWS}
 {$ENDIF}
@@ -50,6 +50,8 @@ function HexStringToBuffer(HexString: string): TBytes;
 function PCSCErrorToString(ErrorCode: Cardinal): string;
 function CardErrorToString(ErrorCode: Word): string;
 function WindowsErrorToString(ErrorCode: Cardinal): string;
+
+procedure CheckPCSCError(ErrorCode: Cardinal);
 
 implementation
 
@@ -239,6 +241,14 @@ begin
   result := trim(SysErrorMessage(ErrorCode));
   if result = '' then result := 'Unknown.'
   else if result[length(result)] <> '.' then result := result + '.';
+end;
+
+procedure CheckPCSCError(ErrorCode: Cardinal);
+begin
+  if ErrorCode >= $80000000 then
+    raise Exception.Create(PCSCErrorToString(ErrorCode))
+  else
+    CheckOSError(ErrorCode);
 end;
 
 end.
