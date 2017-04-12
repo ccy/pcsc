@@ -1,0 +1,224 @@
+object MainForm: TMainForm
+  Left = 316
+  Height = 624
+  Top = 196
+  Width = 650
+  Caption = 'PC/SC Sample Application '
+  ClientHeight = 624
+  ClientWidth = 650
+  Color = clBtnFace
+  Constraints.MaxWidth = 650
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 650
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  Position = poScreenCenter
+  LCLVersion = '1.0.8.0'
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 8
+    Top = 180
+    Width = 650
+    Align = alTop
+    Beveled = True
+    MinSize = 100
+    ResizeAnchor = akTop
+  end
+  object TopPanel: TPanel
+    Left = 0
+    Height = 180
+    Top = 0
+    Width = 650
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 180
+    ClientWidth = 650
+    Constraints.MinHeight = 70
+    TabOrder = 0
+    object Panel3: TPanel
+      Left = 0
+      Height = 21
+      Top = 0
+      Width = 650
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 21
+      ClientWidth = 650
+      TabOrder = 0
+      object Label1: TLabel
+        Left = 6
+        Height = 14
+        Top = 1
+        Width = 69
+        Caption = 'Card Readers'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object ReaderListBox: TListBox
+      Left = 0
+      Height = 159
+      Top = 21
+      Width = 650
+      Align = alClient
+      BorderStyle = bsNone
+      ItemHeight = 30
+      OnClick = ReaderListBoxClick
+      OnDrawItem = ReaderListBoxDrawItem
+      ScrollWidth = 650
+      Style = lbOwnerDrawVariable
+      TabOrder = 1
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 436
+    Top = 188
+    Width = 650
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 436
+    ClientWidth = 650
+    TabOrder = 1
+    object Panel2: TPanel
+      Left = 0
+      Height = 101
+      Top = 0
+      Width = 650
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 101
+      ClientWidth = 650
+      Font.Color = clWindowText
+      Font.Height = -11
+      ParentFont = False
+      TabOrder = 0
+      object Label2: TLabel
+        Left = 6
+        Height = 14
+        Top = 81
+        Width = 75
+        Caption = 'Log Messages'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label3: TLabel
+        Left = 14
+        Height = 14
+        Top = 46
+        Width = 56
+        Caption = 'Command:'
+        ParentColor = False
+      end
+      object Bevel1: TBevel
+        Left = 6
+        Height = 2
+        Top = 78
+        Width = 625
+      end
+      object ConnectSharedButton: TButton
+        Left = 86
+        Height = 25
+        Top = 6
+        Width = 97
+        Caption = 'Connect shared'
+        Enabled = False
+        OnClick = ConnectSharedButtonClick
+        TabOrder = 0
+      end
+      object ConnectExclusiveButton: TButton
+        Left = 187
+        Height = 25
+        Top = 6
+        Width = 97
+        Caption = 'Connect exclusive'
+        Enabled = False
+        OnClick = ConnectExclusiveButtonClick
+        TabOrder = 1
+      end
+      object DisconnectButton: TButton
+        Left = 390
+        Height = 25
+        Top = 6
+        Width = 97
+        Caption = 'Disconnect'
+        Enabled = False
+        OnClick = DisconnectButtonClick
+        TabOrder = 3
+      end
+      object CommandComboBox: TComboBox
+        Left = 86
+        Height = 21
+        Top = 40
+        Width = 401
+        Enabled = False
+        ItemHeight = 13
+        Items.Strings = (
+          'FF CA 00 00 00'
+        )
+        MaxLength = 260
+        OnChange = CommandComboBoxChange
+        OnEnter = CommandComboBoxEnter
+        OnExit = CommandComboBoxExit
+        OnKeyDown = CommandComboBoxKeyDown
+        OnKeyPress = CommandComboBoxKeyPress
+        TabOrder = 4
+      end
+      object TransmitButton: TButton
+        Left = 494
+        Height = 25
+        Top = 41
+        Width = 129
+        Caption = 'Execute command'
+        Enabled = False
+        OnClick = TransmitButtonClick
+        TabOrder = 5
+      end
+      object ConnectDirectButton: TButton
+        Left = 289
+        Height = 25
+        Top = 6
+        Width = 97
+        Caption = 'Connect direct'
+        Enabled = False
+        OnClick = ConnectDirectButtonClick
+        TabOrder = 2
+      end
+    end
+    object StatusBar1: TStatusBar
+      Left = 0
+      Height = 23
+      Top = 413
+      Width = 650
+      Panels = <>
+      SimpleText = '(C) 2013 Infintuary'
+    end
+    object LogMemo: TMemo
+      Left = 0
+      Height = 312
+      Top = 101
+      Width = 650
+      Align = alClient
+      BorderStyle = bsNone
+      Lines.Strings = (
+        'LogMemo'
+      )
+      ReadOnly = True
+      ScrollBars = ssBoth
+      TabOrder = 2
+      TabStop = False
+      WordWrap = False
+    end
+  end
+end
