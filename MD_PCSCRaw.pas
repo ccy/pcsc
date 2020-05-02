@@ -281,7 +281,11 @@ end;
 function TPCSCRaw.SCardTransmit(hCard: THandle; PioSendPci: PSCardIoRequest; SendBuffer: Pointer; SizeSendBuffer: Cardinal; PioRecvPci: PSCardIoRequest; RecvBuffer: Pointer;
   var SizeRecvBuffer: Cardinal): Cardinal;
 begin
-  if FValid and Assigned(FSCardTransmit) then Result := FSCardTransmit(hCard, PioSendPci, SendBuffer, SizeSendBuffer, PioRecvPci, RecvBuffer, SizeRecvBuffer)
+  if FValid and Assigned(FSCardTransmit) then
+    begin
+      Result := FSCardTransmit(hCard, PioSendPci, SendBuffer, SizeSendBuffer, PioRecvPci, RecvBuffer, SizeRecvBuffer)
+      SetLength(RecvBuffer, SizeRecvBuffer);
+    end
   else Result := SCARD_E_UNSUPPORTED_FEATURE;
 end;
 
