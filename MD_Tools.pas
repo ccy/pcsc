@@ -247,8 +247,10 @@ procedure CheckPCSCError(ErrorCode: Cardinal);
 begin
   if ErrorCode >= $80000000 then
     raise Exception.Create(PCSCErrorToString(ErrorCode))
+{$IFDEF WINDOWS}
   else
     CheckOSError(ErrorCode);
+{$ENDIF}
 end;
 
 end.
